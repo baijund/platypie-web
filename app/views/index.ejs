@@ -4,9 +4,19 @@
     <title><%= title %></title>
     <% include ../includes/jquery %>
     <% include ../includes/bootstrap %>
+    <script type="text/javascript" src="javascripts/activities/MainActivity.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="center-block">
+            <h1 class=""><%= title %></h1>
+            <button class="btn btn-primary" onclick="goToLogin()">Log in</button>
+            <button class="btn btn-primary" onclick="goToRegister()">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
