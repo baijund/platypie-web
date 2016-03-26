@@ -18,6 +18,7 @@ router.get('/register', function(req, res, next) {
 
 /* POST users. */
 router.post('/users', function(req, res, next) {
+  var users = require('users.js');
   res.json({sample: "sample1"});
 });
 
