@@ -33,7 +33,7 @@ router.get('/register', function(req, res, next) {
 /* POST users/getUser. */
 router.post('/users/getUser', function(req, res, next) {
   var users = require('./users.js');
-  var profile = users.getUser(req.body.username, req.body.password, res);
+  var profile = users.getUser(req.body.username, res);
 });
 
 

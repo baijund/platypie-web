@@ -1,6 +1,6 @@
 
-//Takes in username, password, and response object to generate JSON response of user profile or {invalid: true}
-var getUser = function(username, password, res){
+//Takes in username and response object to generate JSON response of user profile without password or {invalid: true}
+var getUser = function(username, res){
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
@@ -12,7 +12,6 @@ var getUser = function(username, password, res){
                   users.lastname,\
                   users.email,\
                   users.username,\
-                  users.password,\
                   users.aboutme,\
                   users.major,\
                   users.banned,\
@@ -21,7 +20,7 @@ var getUser = function(username, password, res){
                 FROM\
                   public.users\
                 WHERE\
-                  username='" + username + "' AND password='" + password + "';";
+                  username='" + username + "';";
 
     client.query(q, function(err, result) {
         if(err) {
