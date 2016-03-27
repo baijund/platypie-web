@@ -1,4 +1,17 @@
-DATABASE_INFO = "THIS IS DBINFO";
+//Allow pg to be accessed from any file
+pg = require('pg');
+
+//Declare connection information in global object
+CONNNECTION_OBJ = {
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    ssl: true
+}
+
+
 var express = require('express');
 var router = express.Router();
 
@@ -17,11 +30,11 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
-/* POST users. */
-router.post('/users', function(req, res, next) {
+/* POST users/getUser. */
+router.post('/users/getUser', function(req, res, next) {
   var users = require('./users.js');
-  users.getUser();  
-  res.json({sample: "sample1"});
+  var profile = users.getUser(req.body.username, req.body.password, res);
 });
+
 
 module.exports = router;
