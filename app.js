@@ -22,11 +22,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//THIS IS JUST TO TEST COOKIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAKE SECRET MORE SECRET!!!
 app.use(session({
     secret: process.env.SECRET,
     // create new redis store.
-    store: new redisStore({url: 'redis://rediscloud:gzTf8mgm2qXOgKtP@pub-redis-12858.us-east-1-3.7.ec2.redislabs.com:12858'}),
+    store: new redisStore({url: process.env.REDISCLOUD_URL}),
     saveUninitialized: true,
     resave: true
 }));

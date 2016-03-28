@@ -76,7 +76,7 @@ var addUser = function(userObject, res){
 }
 
 //Takes in String username, String password, and Repsonse res. Renders {error: false} if succeeded and sets session cookies.
-var login = function(username, password, res){
+var login = function(username, password, res, req){
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
       return console.error('could not connect to postgres', err);
@@ -95,7 +95,9 @@ var login = function(username, password, res){
                 FROM\
                   public.users\
                 WHERE\
-                  username='" + username + "';";
+                  username='" + username + "' AND password='" + password + "';";
+
+    console.log("Query: " + q);
 
     client.query(q, function(err, result) {
         if(err) {
@@ -105,11 +107,13 @@ var login = function(username, password, res){
         done();
 
         var row = result.rows[0];
-        //console.log(row);
+        console.log(row);
         if (!row){
           res.json({invalid: true});
         } else {
           row.invalid = false;
+          //Set session variable if logged in
+          req.session.CurrentUser = row;
           res.json(row);
         }
       });
@@ -140,5 +144,6 @@ var unadmin = function(username, res){
 
 module.exports = {
   "getUser": getUser,
-  "addUser": addUser
+  "addUser": addUser,
+  "login": login
 }

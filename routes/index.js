@@ -19,12 +19,17 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.session.user);
+  console.log(req.session.CurrentUser);
   res.render('index', { title: 'No Chill' });
 });
 
 /* GET login page. */
 router.get('/login', function(req, res, next) {
+  if(req.session.CurrentUser){
+    console.log("CurrentUser exists");
+    res.redirect("/loggedin");
+    return;
+  }
   res.render('login', { title: 'Login' });
 });
 
@@ -70,14 +75,25 @@ router.post('/users/addUser', function(req, res, next) {
 
 /* POST users/login. */
 router.post('/users/login', function(req, res, next) {
+
+  console.log("Login attempted");
   //Require username and password fields
   if (!req.body.username || !req.body.password){
     res.json({invalid: true});
   } else {
-    users.login(req.body.username, req.body.password, res);
+    users.login(req.body.username, req.body.password, res, req);
   }
 });
 
+
+router.get('/loggedin', function(req, res, next) {
+  res.render('loggedin', {title: "Logged in", CurrentUser: req.session.CurrentUser});
+});
+
+router.get('/logout', function(req, res, next){
+  delete req.session.CurrentUser;
+  res.redirect('/login');
+});
 
 
 module.exports = router;

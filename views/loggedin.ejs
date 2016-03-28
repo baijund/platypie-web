@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../includes/jquery %>
+    <% include ../includes/bootstrap %>
+    <script type="text/javascript" src="javascripts/activities/LoginActivity.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Logged in as: <%= CurrentUser.username %></h1>
+          <a href="/logout">logout</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

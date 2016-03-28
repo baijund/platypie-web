@@ -1,6 +1,6 @@
 $(document).ready(function(){
   console.log("Login Page Loaded");
-  $("#loginForm").ajaxForm({url: 'users/getUser', type: 'post', success: loginReqSuccess, error: loginReqError})
+  $("#loginForm").ajaxForm({url: 'users/login', type: 'post', success: loginReqSuccess, error: loginReqError})
 });
 
 function loginReqSuccess(responseText, statusText, xhr, $form){
@@ -9,6 +9,7 @@ function loginReqSuccess(responseText, statusText, xhr, $form){
   console.log("Successfully retreived data from users");
   if (!responseText.invalid){
     $("#success").fadeIn();
+    window.location.href = "/loggedin";
   } else {
     $("#incorrect").fadeIn();
   }
