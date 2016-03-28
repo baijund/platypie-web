@@ -140,10 +140,32 @@ var unadmin = function(username, res){
 
 }
 
+var editUser = function(userObject, res){
+  var q = "UPDATE public.users SET firstname='" + userObject.firstName + "', lastname='" + userObject.lastName + "', email='" + userObject.email + "', aboutme='" + userObject.about + "', major='" + userObject.major + "' WHERE username='" + userObject.username + "'";
+
+  pg.connect(CONNNECTION_OBJ, function(err, client, done) {
+    if(err) {
+      return console.error('could not connect to postgres', err);
+    }
+
+    client.query(q, function(err, result) {
+        if(err) {
+          res.json({error: true, errormsg:"Database error"});
+          return console.error('error running query', err);
+        }
+
+        done();
+        res.json({error: false});
+      });
+  });
+
+}
+
 
 
 module.exports = {
   "getUser": getUser,
   "addUser": addUser,
-  "login": login
+  "login": login,
+  "editUser": editUser
 }

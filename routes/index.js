@@ -85,9 +85,42 @@ router.post('/users/login', function(req, res, next) {
   }
 });
 
+/* POST users/editUser. */
+router.post('/users/editUser', function(req, res, next) {
+
+  console.log("Edit User attempted");
+  //Require username and password fields
+
+  //Make sure user is logged in
+  if(req.session.CurrentUser){
+    //Make sure there is a userObjectString
+    var userObjectString = req.body.userObjectString;
+    if(userObjectString){
+      var userObject = JSON.parse(userObjectString);
+
+      //Make sure logged in user is the same as requested user
+      if(userObject.username === req.session.CurrentUser.username){
+        users.editUser(userObject, res);
+      } else {
+        res.json({error: true, errormsg: "Not logged in as proper user"});
+      }
+
+    } else {
+      res.json({error: true, errormsg: "No userObjectString"});
+    }
+  } else {
+    res.json({error: true, errormsg: "Not logged in"});
+  }
+
+});
+
 
 router.get('/loggedin', function(req, res, next) {
-  res.render('loggedin', {title: "Logged in", CurrentUser: req.session.CurrentUser});
+  if(req.session.CurrentUser){
+    res.render('loggedin', {title: "Logged in", CurrentUser: req.session.CurrentUser});
+  } else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/logout', function(req, res, next){
