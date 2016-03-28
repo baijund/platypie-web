@@ -57,14 +57,13 @@ router.post('/users/addUser', function(req, res, next) {
   //Make sure the request has a userObjectString
   if (!userObjectString){
     console.log("userObjectString is missing");
-    res.json({invalid: true});
+    res.json({error: true, errormsg: "Bad post parameters", errorid: "POST"});
   } else {
     var userObject = JSON.parse(userObjectString);
     //Make sure userObject and all its fields are defined
     if (!userObject || !userObject.firstName || !userObject.lastName || !userObject.email || !userObject.username || !userObject.password || !userObject.about || !userObject.major){
       console.log("Something is missing");
-      console.log(userObject.firstName & userObject.lastName );
-      res.json({invalid: true});
+      res.json({error: true, errormsg: "Bad user object", errorid: "USER_OBJECT"});
     } else {
       console.log("Nothing is missing");
       users.addUser(userObject, res);
@@ -98,18 +97,23 @@ router.post('/users/editUser', function(req, res, next) {
     if(userObjectString){
       var userObject = JSON.parse(userObjectString);
 
-      //Make sure logged in user is the same as requested user
-      if(userObject.username === req.session.CurrentUser.username){
-        users.editUser(userObject, res);
+      //Make sure userObject and all fields are defined
+      if (!userObject || !userObject.firstName || !userObject.lastName || !userObject.email || !userObject.username || !userObject.password || !userObject.about || !userObject.major){
+        res.json({error: true, errormsg: "Bad user object", errorid: "USER_OBJECT"});
       } else {
-        res.json({error: true, errormsg: "Not logged in as proper user"});
+        //Make sure logged in user is the same as requested user
+        if(userObject.username === req.session.CurrentUser.username){
+          users.editUser(userObject, res);
+        } else {
+          res.json({error: true, errormsg: "Not logged in as proper user", errorid: "WRONG_USER"});
+        }
       }
 
     } else {
-      res.json({error: true, errormsg: "No userObjectString"});
+      res.json({error: true, errormsg: "No userObjectString", errorid: "POST"});
     }
   } else {
-    res.json({error: true, errormsg: "Not logged in"});
+    res.json({error: true, errormsg: "Not logged in", errorid: "LOGGED_IN"});
   }
 
 });

@@ -1,5 +1,5 @@
 
-//Takes in username and Response object to generate JSON response of user profile without password or {invalid: true}
+//Takes in username and Response object to generate JSON response of user profile without password
 var getUser = function(username, res){
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
@@ -41,10 +41,11 @@ var getUser = function(username, res){
   });
 }
 
-//Takes in a UserObject and Response object and adds the user to the database. A JSON response of {invalid: true} is generated if it failed. A response of {invalid: false} is generated if it succeeds.
+//Takes in a UserObject and Response object and adds the user to the database..
 var addUser = function(userObject, res){
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
       return console.error('could not connect to postgres', err);
     }
 
@@ -58,27 +59,29 @@ var addUser = function(userObject, res){
 
     client.query(q, function(err, result) {
         if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
         done();
 
-        var row = result.rows[0];
-        //console.log(row);
-        if (!row){
-          res.json({invalid: true});
+        var rowCount = result.rowCount;
+        console.log(rowCount);
+        if (!rowCount){
+          res.json({error: true, errormsg: "Failed to add user", errorid: "ADD_USER"});
         } else {
-          row.invalid = false;
-          res.json(row);
+          res.json({error: false});
         }
       });
   });
 }
 
-//Takes in String username, String password, and Repsonse res. Renders {error: false} if succeeded and sets session cookies.
+//Takes in String username, String password, and Repsonse res. Renders Profile object with error: false if succeeded.
+//Renders {error:true, errormsg: , errorid} if failed
 var login = function(username, password, res, req){
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
       return console.error('could not connect to postgres', err);
     }
 
@@ -101,6 +104,7 @@ var login = function(username, password, res, req){
 
     client.query(q, function(err, result) {
         if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -109,12 +113,18 @@ var login = function(username, password, res, req){
         var row = result.rows[0];
         console.log(row);
         if (!row){
-          res.json({invalid: true});
+          res.json({error: true, errormsg:"Invalid login", errorid: "BAD_LOGIN"});
         } else {
           row.invalid = false;
-          //Set session variable if logged in
-          req.session.CurrentUser = row;
-          res.json(row);
+          //Set session variable if not banned
+          if(!row.banned){
+            req.session.CurrentUser = row;
+            row.error = false;
+            res.json(row);
+          } else {
+            res.json({error: true, errormsg:"User is banned", errorid: "BANNED"})
+          }
+
         }
       });
   });
@@ -135,22 +145,24 @@ var getUnbannedUSers = function(res){
 
 }
 
-//Takes in a String representing the username of an admin, and a response object. Renders a {error: false} if successful or else a {error: false, errormsg: (SOME MESSAGE)}
+//Takes in a String representing the username of an admin, and a response object. (Incomplete)
 var unadmin = function(username, res){
 
 }
 
+//Takes in userObject and updates entry in database
 var editUser = function(userObject, res){
   var q = "UPDATE public.users SET firstname='" + userObject.firstName + "', lastname='" + userObject.lastName + "', email='" + userObject.email + "', aboutme='" + userObject.about + "', major='" + userObject.major + "' WHERE username='" + userObject.username + "'";
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
       return console.error('could not connect to postgres', err);
     }
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database error"});
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
