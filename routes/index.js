@@ -19,6 +19,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.session.user);
   res.render('index', { title: 'No Chill' });
 });
 
@@ -29,11 +30,14 @@ router.get('/login', function(req, res, next) {
 
 /* GET register page. */
 router.get('/register', function(req, res, next) {
+  // delete req.session.user;
   res.render('register', { title: 'Register' });
 });
 
 /* POST users/getUser. */
 router.post('/users/getUser', function(req, res, next) {
+  // req.session.user = req.body.username;
+  // console.log("In get: " + req.session.user);
   if (!req.body.username){
     res.json({invalid: true});
   } else {
@@ -45,6 +49,7 @@ router.post('/users/getUser', function(req, res, next) {
 router.post('/users/addUser', function(req, res, next) {
   var userObjectString = req.body.userObjectString;
 
+  //Make sure the request has a userObjectString
   if (!userObjectString){
     console.log("userObjectString is missing");
     res.json({invalid: true});

@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
 
 var routes = require('./routes/index');
 //var users = require('./routes/users');
@@ -19,7 +21,20 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+//THIS IS JUST TO TEST COOKIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAKE SECRET MORE SECRET!!!
+app.use(session({
+    secret: process.env.SECRET,
+    // create new redis store.
+    store: new redisStore({url: 'redis://rediscloud:gzTf8mgm2qXOgKtP@pub-redis-12858.us-east-1-3.7.ec2.redislabs.com:12858'}),
+    saveUninitialized: true,
+    resave: true
+}));
+
 app.use(cookieParser());
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
