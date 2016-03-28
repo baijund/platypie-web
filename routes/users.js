@@ -41,6 +41,29 @@ var getUser = function(username, res){
   });
 }
 
+
+//Helper to determine if user is in db
+function userExists(userObject, client, existFunc, notExistFunc, errorFunc){
+  console.log("Checking existence");
+  var q = "SELECT * FROM public.users WHERE username='" + userObject.username + "';";
+
+  client.query(q, function(err, result) {
+      if(err) {
+        console.error('error running query', err);
+        errorFunc();
+      } else {
+        var rows = result.rows;
+        var rowlen = rows.length;
+        console.log("Row length is: " + rowlen);
+        if (rowlen){
+          existFunc();
+        } else {
+          notExistFunc();
+        }
+      }
+    });
+}
+
 //Takes in a UserObject and Response object and adds the user to the database..
 var addUser = function(userObject, res){
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
@@ -49,30 +72,41 @@ var addUser = function(userObject, res){
       return console.error('could not connect to postgres', err);
     }
 
-    //var q = "﻿INSERT INTO public.users VALUES ('" + userObject.firstName + "', '" + userObject.lastName + "', '" + userObject.email + "', '" + userObject.username + "', '" + userObject.password + "', '" + userObject.about + "', '" + userObject.major + "', false, false, false);";
+    var errorFunc = function(){
+      res.json({error: true, errormsg:"Database query error when checking existence", errorid: "QUERY"});
+      done();
+    }
 
-    //q = "INSERT INTO public.users VALUES ('fires', 'last', 'Admin@Admindsa.com', 'admdsasin', 'password', 'I am an admin', 'Physics', false, true, true);";
+    var existFunc = function(){
+      res.json({error: true, errormsg: "User exists", errorid:"USER_EXISTS"});
+      done();
+    }
 
-    var q = "INSERT INTO public.users VALUES ('" + userObject.firstName + "', '" + userObject.lastName + "', '" + userObject.email + "', '" + userObject.username + "', '" + userObject.password + "', '" + userObject.about + "', '" + userObject.major + "', false, false, false);";
+    var notExistFunc = function(){
+      var q = "INSERT INTO public.users VALUES ('" + userObject.firstName + "', '" + userObject.lastName + "', '" + userObject.email + "', '" + userObject.username + "', '" + userObject.password + "', '" + userObject.about + "', '" + userObject.major + "', false, false, false);";
 
-    console.log("Query: " + q);
+//      console.log("Query: " + q);
 
-    client.query(q, function(err, result) {
-        if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
-          return console.error('error running query', err);
-        }
+      client.query(q, function(err, result) {
+          if(err) {
+            res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+            return console.error('error running query', err);
+          }
 
-        done();
+          done();
 
-        var rowCount = result.rowCount;
-        console.log(rowCount);
-        if (!rowCount){
-          res.json({error: true, errormsg: "Failed to add user", errorid: "ADD_USER"});
-        } else {
-          res.json({error: false});
-        }
-      });
+          var rowCount = result.rowCount;
+          
+          if (!rowCount){
+            res.json({error: true, errormsg: "Failed to add user", errorid: "ADD_USER"});
+          } else {
+            res.json({error: false});
+          }
+        });
+    }
+
+    userExists(userObject, client, existFunc, notExistFunc, errorFunc);
+
   });
 }
 
