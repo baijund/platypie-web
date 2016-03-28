@@ -7,7 +7,7 @@ function loginReqSuccess(responseText, statusText, xhr, $form){
   $(".alert").hide();
   //$("#success").fadeIn();
   console.log("Successfully retreived data from users");
-  if (!responseText.invalid){
+  if (!responseText.error){
     $("#success").fadeIn();
     window.location.href = "/loggedin";
   } else {

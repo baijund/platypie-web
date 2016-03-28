@@ -119,6 +119,16 @@ router.post('/users/editUser', function(req, res, next) {
 });
 
 
+/* POST users/getUnbannedUsers. */
+router.post('/users/getUnbannedUsers', function(req, res, next) {
+  users.getUnbannedUsers(res);
+});
+
+/* POST users/getBannedUsers. */
+router.post('/users/getBannedUsers', function(req, res, next) {
+  users.getBannedUsers(res);
+});
+
 router.get('/loggedin', function(req, res, next) {
   if(req.session.CurrentUser){
     res.render('loggedin', {title: "Logged in", CurrentUser: req.session.CurrentUser});

@@ -130,19 +130,55 @@ var login = function(username, password, res, req){
   });
 }
 
-//Takes in a Response object and renders an array of Strings representing the users (incomplete)
+//Takes in a Response object and renders an array of Strings representing the users (incomplete, probably not needed)
 var getUserList = function(res){
 
 }
 
-//Takes in a Response object and renders an array of Strings representing the banned users except superadmin (incomplete)
+//Takes in a Response object and renders an array of Strings representing the banned users except superadmin
 var getBannedUsers = function(res){
+  var q = "SELECT username FROM public.users WHERE superadmin='f' AND banned='t'";
 
+  pg.connect(CONNNECTION_OBJ, function(err, client, done) {
+    if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
+      return console.error('could not connect to postgres', err);
+    }
+
+    client.query(q, function(err, result) {
+        if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          return console.error('error running query', err);
+        }
+
+        done();
+        var entries = result.rows;
+        res.json({"entries" : entries, error: false});
+      });
+  });
 }
 
-//Takes in a Response object and renders an array of Strings representing the unbanned users except superadmin (incomplete)
-var getUnbannedUSers = function(res){
+//Takes in a Response object and renders an array of Strings representing the unbanned users except superadmin
+var getUnbannedUsers = function(res){
+  var q = "SELECT username FROM public.users WHERE superadmin='f' AND banned='f'";
 
+  pg.connect(CONNNECTION_OBJ, function(err, client, done) {
+    if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
+      return console.error('could not connect to postgres', err);
+    }
+
+    client.query(q, function(err, result) {
+        if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          return console.error('error running query', err);
+        }
+
+        done();
+        var entries = result.rows;
+        res.json({"entries" : entries, error: false});
+      });
+  });
 }
 
 //Takes in a String representing the username of an admin, and a response object. (Incomplete)
@@ -179,5 +215,7 @@ module.exports = {
   "getUser": getUser,
   "addUser": addUser,
   "login": login,
-  "editUser": editUser
+  "editUser": editUser,
+  "getUnbannedUsers": getUnbannedUsers,
+  "getBannedUsers": getBannedUsers
 }
