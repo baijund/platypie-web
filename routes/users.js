@@ -4,6 +4,7 @@ var getUser = function(username, res){
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
       return console.error('could not connect to postgres', err);
     }
 
@@ -24,6 +25,7 @@ var getUser = function(username, res){
 
     client.query(q, function(err, result) {
         if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -32,9 +34,9 @@ var getUser = function(username, res){
         var row = result.rows[0];
         //console.log(row);
         if (!row){
-          res.json({invalid: true});
+          res.json({error: true, errormsg:"User not found", errorid: "NO_USER"});
         } else {
-          row.invalid = false;
+          row.error = false;
           res.json(row);
         }
       });
@@ -85,7 +87,7 @@ var addUser = function(userObject, res){
     var notExistFunc = function(){
       var q = "INSERT INTO public.users VALUES ('" + userObject.firstName + "', '" + userObject.lastName + "', '" + userObject.email + "', '" + userObject.username + "', '" + userObject.password + "', '" + userObject.about + "', '" + userObject.major + "', false, false, false);";
 
-//      console.log("Query: " + q);
+      //console.log("Query: " + q);
 
       client.query(q, function(err, result) {
           if(err) {
@@ -96,7 +98,7 @@ var addUser = function(userObject, res){
           done();
 
           var rowCount = result.rowCount;
-          
+
           if (!rowCount){
             res.json({error: true, errormsg: "Failed to add user", errorid: "ADD_USER"});
           } else {

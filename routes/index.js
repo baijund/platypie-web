@@ -12,7 +12,7 @@ CONNNECTION_OBJ = {
 }
 
 var users = require('./users.js');
-
+var movies = require('./movies.js')
 
 var express = require('express');
 var router = express.Router();
@@ -142,5 +142,33 @@ router.get('/logout', function(req, res, next){
   res.redirect('/login');
 });
 
+
+/* POST movies/getMovie. */
+router.post('/movies/getMovie', function(req, res, next) {
+  var id = parseInt(req.body.id);
+  //Check for id
+  if(id){
+    movies.getMovie(id, res);
+  } else {
+    res.json({error: true, errormsg: "id is missing", errorid: "NO_ID"})
+  }
+});
+
+/* POST movies/addMovie. */
+router.post('/movies/addMovie', function(req, res, next) {
+
+  var movieString = req.body.movieString;
+  var majorRatingString = req.body.majorRatingString;
+  if(!movieString){
+    res.json({error: true, errormsg: "Movie string missing", errorid: "MOVIE_STRING"})
+  } else if (!majorRatingString){
+    res.json({error: true, errormsg: "Movie string missing", errorid: "MAJOR_STRING"})
+  } else{
+    var movie = JSON.parse(movieString);
+    var majorRating = JSON.parse(majorRatingString);
+    movies.addMovie(movie, majorRating, res);
+  }
+
+});
 
 module.exports = router;
