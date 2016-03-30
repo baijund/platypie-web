@@ -34,7 +34,8 @@ var addMovie = function(movie, majorRating, res){
   try{
     movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
   } catch(e){
-    movie.actors = "a1, a2, a3";
+    movie.actors = ["a1", "a2", "a3"];
+    movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
   }
 
   console.log(movie.actors);
