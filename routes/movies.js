@@ -39,7 +39,7 @@ var addMovie = function(movie, majorRating, res){
   }
 
   console.log(movie.actors);
-  var q = "INSERT INTO public.movies VALUES ('" + movie.name + "','" + movie.year + "','" + movie.rating_mpaa + "','" + movie.id + "','" + movie.description + "','" + movie.averageRating + "','" + movie.numRatings + "','{" + movie.actors + "}');";
+  var q = "INSERT INTO public.movies VALUES ('" + movie.name + "','" + movie.year + "','" + movie.rating_mpaa + "','" + movie.id + "','" + movie.description + "','" + movie.averageRating + "','" + movie.numRatings + "','{}');";
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
