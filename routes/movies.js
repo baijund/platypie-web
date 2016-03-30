@@ -104,7 +104,12 @@ var addOrUpdateMovie = function(movie, majorRating, res){
 }
 
 var updateMovie = function(movie, majorRating, res){
-  movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
+  try{
+    movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
+  } catch(e){
+    movie.actors = ["a1", "a2", "a3"];
+    movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
+  }
   var q = "UPDATE public.movies SET \"ID\"='" + movie.id + "', name='" + movie.name + "', year='" + movie.year + "', rating_mpaa='" + movie.rating_mpaa + "', description='" + movie.description + "', \"averageRating\"='" + movie.averageRating +  "', \"numRatings\"='" + movie.numRatings + "', actors='{" + movie.actors + "}' WHERE \"ID\"='" + movie.id + "'";
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
