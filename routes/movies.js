@@ -113,5 +113,6 @@ var getMovieList = function(res){
 
 module.exports = {
   "getMovie": getMovie,
-  "addMovie": addMovie
+  "addMovie": addMovie,
+  "getMovieList": getMovieList
 };
