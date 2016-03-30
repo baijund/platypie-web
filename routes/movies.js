@@ -70,7 +70,7 @@ var addMovie = function(movie, majorRating, res){
 
 
 var getMovieList = function(res){
-  var q = "SELECT * FROM users.movies;";
+  var q = "SELECT * FROM public.movies;";
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
       res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
@@ -90,7 +90,7 @@ var getMovieList = function(res){
         } else {
 
           var movieRows = result.rows;
-          q = "SELECT * FROM public.\"majorRatings\"";
+          q = "SELECT * FROM public.\"majorRatings\";";
           client.query(q, function(err, result){
             if(err) {
               res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
@@ -101,7 +101,14 @@ var getMovieList = function(res){
             var returnObj = {error: false, movies: []};
 
             for(var i = 0; i < movieRows.length; i++){
-              returnObj.movies.push(movieRows[i]);
+              returnObj.movies[i] = movieRows[i];
+              returnObj.movies[i].majorRatings = [];
+              for(var j = 0; j < result.rows.length; j++){
+                //console.log(result.rows[j]);
+                if(result.rows[j].ID == returnObj.movies[i].ID){
+                  returnObj.movies[i].majorRatings.push(result.rows[j]);
+                }
+              }
             }
 
             res.json(returnObj);

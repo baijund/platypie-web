@@ -31,3 +31,4 @@ npm-debug.log
 
 #Any shell files
 *.sh
+*.ps1
