@@ -69,6 +69,48 @@ var addMovie = function(movie, majorRating, res){
 }
 
 
+var getMovieList = function(res){
+  var q = "SELECT * FROM users.movies;";
+  pg.connect(CONNNECTION_OBJ, function(err, client, done) {
+    if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
+      return console.error('could not connect to postgres', err);
+    }
+
+    client.query(q, function(err, result) {
+        if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          return console.error('error running query', err);
+        }
+
+        var rowCount = result.rowCount;
+
+        if (!rowCount){
+          res.json([]);
+        } else {
+
+          var movieRows = result.rows;
+          q = "SELECT * FROM public.\"majorRatings\"";
+          client.query(q, function(err, result){
+            if(err) {
+              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              return console.error('error running query', err);
+            }
+            done();
+
+            var returnObj = {error: false, movies: []};
+
+            for(var i = 0; i < movieRows.length; i++){
+              returnObj.movies.push(movieRows[i]);
+            }
+
+            res.json(returnObj);
+          });
+        }
+      });
+  });
+}
+
 module.exports = {
   "getMovie": getMovie,
   "addMovie": addMovie

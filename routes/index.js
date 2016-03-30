@@ -171,4 +171,13 @@ router.post('/movies/addMovie', function(req, res, next) {
 
 });
 
+
+/* GET movies/getMovieList. */
+router.get('/movies/getMovieList', function(req, res, next) {
+
+  
+
+});
+
+
 module.exports = router;
