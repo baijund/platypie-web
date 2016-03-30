@@ -31,7 +31,12 @@ var getMovie = function(id, res){
 //Add movie (very insecure)
 var addMovie = function(movie, majorRating, res){
 
-  movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
+  try{
+    movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
+  } catch(e){
+    movie.actors = "a1, a2, a3";
+  }
+
   console.log(movie.actors);
   var q = "INSERT INTO public.movies VALUES ('" + movie.name + "','" + movie.year + "','" + movie.rating_mpaa + "','" + movie.id + "','" + movie.description + "','" + movie.averageRating + "','" + movie.numRatings + "','{" + movie.actors + "}');";
 
@@ -120,7 +125,7 @@ var updateMovie = function(movie, majorRating, res){
               res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
               return console.error('error running query', err);
             }
-    
+
             done();
             res.json({error: false});
           });
