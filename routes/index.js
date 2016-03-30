@@ -162,7 +162,7 @@ router.post('/movies/addMovie', function(req, res, next) {
   if(!movieString){
     res.json({error: true, errormsg: "Movie string missing", errorid: "MOVIE_STRING"})
   } else if (!majorRatingString){
-    res.json({error: true, errormsg: "Movie string missing", errorid: "MAJOR_STRING"})
+    res.json({error: true, errormsg: "Major string missing", errorid: "MAJOR_STRING"})
   } else{
     var movie = JSON.parse(movieString);
     var majorRating = JSON.parse(majorRatingString);
@@ -177,6 +177,20 @@ router.get('/movies/getMovieList', function(req, res, next) {
 
   movies.getMovieList(res);
 
+});
+
+router.post('/movies/updateMovie', function(req, res, next){
+  var movieString = req.body.movieString;
+  var majorRatingString = req.body.majorRatingString;
+  if(!movieString){
+    res.json({error: true, errormsg: "Movie string missing", errorid: "MOVIE_STRING"})
+  } else if (!majorRatingString){
+    res.json({error: true, errormsg: "Major string missing", errorid: "MAJOR_STRING"})
+  } else{
+    var movie = JSON.parse(movieString);
+    var majorRating = JSON.parse(majorRatingString);
+    movies.updateMovie(movie, majorRating, res);
+  }
 });
 
 
