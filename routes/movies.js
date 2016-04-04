@@ -31,15 +31,17 @@ var getMovie = function(id, res){
 //Add movie (very insecure)
 var addMovie = function(movie, majorRating, res){
 
+  //Try to properly format actors
   try{
     movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
   } catch(e){
+    console.log(e);
     movie.actors = ["a1", "a2", "a3"];
     movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
   }
 
   console.log(movie.actors);
-  var q = "INSERT INTO public.movies VALUES ('" + movie.name + "','" + movie.year + "','" + movie.rating_mpaa + "','" + movie.id + "','" + movie.description + "','" + movie.averageRating + "','" + movie.numRatings + "','{}');";
+  var q = "INSERT INTO public.movies VALUES ('" + movie.name + "','" + movie.year + "','" + movie.rating_mpaa + "','" + movie.id + "','" + movie.description + "','" + movie.averageRating + "','" + movie.numRatings + "','{" + movie.actors + "}');";
 
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
@@ -104,6 +106,7 @@ var addOrUpdateMovie = function(movie, majorRating, res){
 }
 
 var updateMovie = function(movie, majorRating, res){
+  //Try to properly format actors
   try{
     movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
   } catch(e){

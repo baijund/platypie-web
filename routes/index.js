@@ -166,6 +166,7 @@ router.post('/movies/addMovie', function(req, res, next) {
   } else{
     var movie = JSON.parse(movieString);
     var majorRating = JSON.parse(majorRatingString);
+    //Add or update movie
     movies.addMovie(movie, majorRating, res);
   }
 
