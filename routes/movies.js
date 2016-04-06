@@ -14,11 +14,31 @@ var getMovie = function(id, res){
           return console.error('error running query', err);
         }
 
-        done();
+        //done();
         var rows = result.rows;
 
         if (rows.length){
-          res.json({"movie" : rows[0], error: false});
+          //res.json({"movie" : rows[0], error: false});
+          var movieRow = rows[0];
+          q = "SELECT * FROM public.\"majorRatings\" WHERE \"ID\"='" + id + "'";
+
+          client.query(q, function(err, result) {
+
+            if(err) {
+              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              return console.error('error running query', err);
+            }
+
+            done();
+            console.log(result);
+
+            result.rows.push({ID: -1, major: "INVALID", rating: -1, count: -1});
+
+
+            res.json({"movie" : rows, majorRatings: result.rows, error: false});
+
+          });
+
         } else {
           res.json({error: true, errormsg: "Movie not found", errorid: "NO_MOVIE"});
         }
@@ -127,16 +147,38 @@ var updateMovie = function(movie, majorRating, res){
           return console.error('error running query', err);
         }
 
-        q = "UPDATE public.\"majorRatings\" SET \"ID\"='" + majorRating.id + "', major='" + majorRating.major + "', rating='" + majorRating.rating + "', count='" + majorRating.count + "' WHERE \"ID\"='" + majorRating.id + "';";
+
+        q = "SELECT * FROM public.\"majorRatings\" WHERE \"ID\"='" + movie.id + "' AND major='" + majorRating.major + "';";
 
         client.query(q, function(err, result) {
             if(err) {
               res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              console.log(q);
               return console.error('error running query', err);
             }
 
-            done();
-            res.json({error: false});
+            console.log(q);
+            // console.log(result.rows);
+            if(result.rows.length){
+              q = "UPDATE public.\"majorRatings\" SET \"ID\"='" + movie.id + "', major='" + majorRating.major + "', rating='" + majorRating.rating + "', count='" + majorRating.count + "' WHERE \"ID\"='" + majorRating.id + "' AND major='" + majorRating.major + "';";
+            } else {
+              q = "INSERT INTO public.\"majorRatings\" VALUES('" + movie.id + "','" + majorRating.major + "'," + majorRating.rating + "," + majorRating.count + ");";
+            }
+
+            // console.log(q);
+            // console.log(result.rows.length);
+
+            client.query(q, function(err, result) {
+                if(err) {
+                  res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+                  return console.error('error running query', err);
+                }
+
+                done();
+                res.json({error: false});
+
+              });
+
           });
       });
   });
