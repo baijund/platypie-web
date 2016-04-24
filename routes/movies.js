@@ -10,7 +10,7 @@ var getMovie = function(id, res){
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          res.json({error: true, errormsg:"Database query error in get movie", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -25,7 +25,7 @@ var getMovie = function(id, res){
           client.query(q, function(err, result) {
 
             if(err) {
-              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              res.json({error: true, errormsg:"Database query error in selecting from ratings", errorid: "QUERY"});
               return console.error('error running query', err);
             }
 
@@ -51,6 +51,8 @@ var getMovie = function(id, res){
 //Add movie (very insecure)
 var addMovie = function(movie, majorRating, res){
 
+  console.log("Attempting to add movie");
+
   //Try to properly format actors
   try{
     movie.actors = "\"" + movie.actors.join("\",\"") + "\"";
@@ -71,7 +73,7 @@ var addMovie = function(movie, majorRating, res){
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          res.json({error: true, errormsg:"Database query error in addMovie", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -84,7 +86,7 @@ var addMovie = function(movie, majorRating, res){
           q = "INSERT INTO public.\"majorRatings\" VALUES('" + movie.id + "','" + majorRating.major + "','" + majorRating.rating + "','" + majorRating.count + "')";
           client.query(q, function(err, result){
             if(err) {
-              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              res.json({error: true, errormsg:"Database query error in majorRatings insertion", errorid: "QUERY"});
               return console.error('error running query', err);
             }
             done();
@@ -109,7 +111,7 @@ var addOrUpdateMovie = function(movie, majorRating, res){
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          res.json({error: true, errormsg:"Database query error in addOrUpdateMovie", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -143,7 +145,7 @@ var updateMovie = function(movie, majorRating, res){
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          res.json({error: true, errormsg:"Database query error in updateMovie", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -152,7 +154,7 @@ var updateMovie = function(movie, majorRating, res){
 
         client.query(q, function(err, result) {
             if(err) {
-              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              res.json({error: true, errormsg:"Database query error in updateMovie2", errorid: "QUERY"});
               console.log(q);
               return console.error('error running query', err);
             }
@@ -170,7 +172,7 @@ var updateMovie = function(movie, majorRating, res){
 
             client.query(q, function(err, result) {
                 if(err) {
-                  res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+                  res.json({error: true, errormsg:"Database query error in updateMovie3", errorid: "QUERY"});
                   return console.error('error running query', err);
                 }
 
@@ -194,7 +196,7 @@ var getMovieList = function(res){
 
     client.query(q, function(err, result) {
         if(err) {
-          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          res.json({error: true, errormsg:"Database query error in getMovieList", errorid: "QUERY"});
           return console.error('error running query', err);
         }
 
@@ -208,7 +210,7 @@ var getMovieList = function(res){
           q = "SELECT * FROM public.\"majorRatings\";";
           client.query(q, function(err, result){
             if(err) {
-              res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+              res.json({error: true, errormsg:"Database query error in getMovieList2", errorid: "QUERY"});
               return console.error('error running query', err);
             }
             done();
