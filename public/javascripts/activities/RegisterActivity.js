@@ -3,16 +3,18 @@ $(document).ready(function(){
 
   $("#regbutt").click(function(){
     $("#regbutt").prop("disabled", true);
-    a = $("#registerForm").serialize();
-    b = new FormData(document.querySelector("#registerForm"));
-    console.log(b);
 
 
+    $.post("/users/web/addUser",$("#registerForm").serialize(),function(res){
 
-    $("#registerSubmit").serialize() // returns all the data in your form
-    $.post("/RegisterActivity",$("#registerForm").serialize(),function(){
-        console.log("wut")
+      console.log("Request Succeeded");
+
+    }).fail(function(){
+
+      console.log("Request Failed");
+
     });
+
 
 
   });
