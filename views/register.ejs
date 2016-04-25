@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../includes/jquery %>
+    <% include ../includes/bootstrap %>
+    <script type="text/javascript" src="javascripts/activities/RegisterActivity.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+
+            <!-- First Name -->
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+            </div>
+
+            <!-- Last name -->
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+            </div>
+
+            <!-- List of majors -->
+            <div class="form-group">
+              <label for="major">Major</label>
+              <select name="major" id="major">
+                <option value="Physics">Physics</option>
+                <option value="EE">EE</option>
+                <option value="CS">CS</option>
+                <option value="ISYE">ISYE</option>
+              </select>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="pass">Password</label>
+              <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="confirm">Password</label>
+              <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm Password">
+            </div>
+
+            <button type="button" class="btn btn-default" id="regbutt" name="regbutt">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
