@@ -7,14 +7,65 @@
     <link rel="stylesheet" type="text/css" href ="stylesheets/style.css">
     <script type="text/javascript" src="javascripts/activities/DescriptionActivity.js"></script>
   </head>
-  <body>
+  <body class = "registration">
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center">
           <div class="center-block">
-            <h1 class=""><%= title %></h1>
+            <h1 class="" style="text-decoration: underline"><%= movie.title %></h1>
             <p>
-              <%= JSON.stringify(movie,null,2) %>
+              <!-- <%= JSON.stringify(movie,null,2) %> -->
+            </p>
+            <p>
+                <table style = "width: 100%">
+                    <tr>
+                        <th>Movie Information</th>
+                    </tr>
+                </table>
+                <table style="width:100%">
+                        <tr>
+                            <td>Title</td>
+                            <td>Year</td>
+                            <td>Rating</td>
+                            <!-- <tr><td>Synopsis</td></tr> -->
+                        </tr>
+                        <tr>
+                            <td><%= movie.title%></td>
+                            <td><%= movie.year%></td>
+                            <td><%= movie.mpaa_rating%></td>
+                            <!-- <td><%= movie.synopsis%></td> -->
+                        </tr>
+                    </tr>
+                </table>
+                <br><br>
+                <table style = "width: 100%">
+                    <tr>
+                        <th>Synopsis</th>
+                        <tr>
+                            <td><%= movie.synopsis%></td>
+                        </tr>
+                    </tr>
+                </table>
+                <br><br>
+                <table style = "width: 100%">
+                    <tr>
+                        <th>Actors</th>
+                        <tr>
+                            <%= movie.abridged_cast %>
+
+                        </tr>
+                    </tr>
+                </table>
+                <!-- <br>
+
+                <br>
+
+                <br>
+
+                <br>
+
+                <br>
+                <%= movie.abridged_cast%> -->
             </p>
           </div>
         </div>

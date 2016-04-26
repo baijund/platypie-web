@@ -3,7 +3,7 @@ body.home {
   font: 14px "Lucida Console", "Courier New", monospace;
   background-image: url("../images/background_fire.png");
   background-repeat: no-repeat;
-  background-size:cover
+  background-size:cover;
 }
 
 body.registration {
@@ -29,6 +29,10 @@ h3 {
     text-decoration: underline;
 }
 
+p {
+    color: white;
+}
+
 button {
     background-color: white; /* Green */
     border: 2px solid #9e2a00;
@@ -43,4 +47,18 @@ button {
 
 label {
     color: #9e2a00;
+}
+
+table, td, tr {
+    border: 1px solid white;
+    text-align: left;
+    padding: 10px;
+    color: white;
+}
+
+th {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+    color: white;
 }
