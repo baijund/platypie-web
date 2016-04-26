@@ -290,7 +290,7 @@ router.post('/movies/setCurrentMovie', function(req, res, next) {
   var parms = req.body;
 
   if(parms){
-    req.session.CurrentMovie = parms;
+    req.session.CurrentMovie = JSON.parse(parms.carrier);
     res.json({error: false});
   } else {
     res.json({error: true});
