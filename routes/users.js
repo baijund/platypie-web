@@ -1,3 +1,6 @@
+var nodemailer = require('nodemailer');
+
+
 
 //Takes in username and Response object to generate JSON response of user profile without password
 var getUser = function(username, res){
@@ -235,7 +238,60 @@ var editUser = function(userObject, res){
 
 }
 
+var emailUser = function(username, res){
 
+  var transporter = nodemailer.createTransport('smtps://nochillplat%40gmail.com:cs2340999@smtp.gmail.com');
+
+
+
+
+  pg.connect(CONNNECTION_OBJ, function(err, client, done) {
+    if(err) {
+      res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
+      return console.error('could not connect to postgres', err);
+    }
+
+    var q = "SELECT * FROM\
+                  public.users\
+                WHERE\
+                  username='" + username + "';";
+
+    client.query(q, function(err, result) {
+        if(err) {
+          res.json({error: true, errormsg:"Database query error", errorid: "QUERY"});
+          return console.error('error running query', err);
+        }
+
+        done();
+
+        var row = result.rows[0];
+        //console.log(row);
+        if (!row){
+          res.json({error: true, errormsg:"User not found", errorid: "NO_USER"});
+        } else {
+          // setup e-mail data with unicode symbols
+          var mailOptions = {
+              from: '"No Chill" <nochillplat@gmail.com>', // sender address
+              to: row.email, // list of receivers
+              subject: 'Hello', // Subject line
+              text: "Password: " + row.password, // plaintext body
+              html: "Password: " + row.password // html body
+          };
+          console.log("Attempting to send" + row.password);
+
+          // send mail with defined transport object
+          transporter.sendMail(mailOptions, function(error, info){
+              if(error){
+                  res.json({error: true, errormsg:"Unable to email", errorid: "FAIL_EMAIL"});
+                  return console.log(error);
+              }
+              console.log('Message sent: ' + info.response);
+              res.json({error: false});
+          });
+        }
+      });
+  });
+}
 
 module.exports = {
   "getUser": getUser,
@@ -243,5 +299,6 @@ module.exports = {
   "login": login,
   "editUser": editUser,
   "getUnbannedUsers": getUnbannedUsers,
-  "getBannedUsers": getBannedUsers
+  "getBannedUsers": getBannedUsers,
+  "emailUser": emailUser
 }

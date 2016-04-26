@@ -5,7 +5,7 @@
     <% include ../includes/jquery %>
     <% include ../includes/bootstrap %>
     <link rel="stylesheet" type="text/css" href ="stylesheets/style.css">
-    <script type="text/javascript" src="javascripts/activities/MainActivity.js"></script>
+    <script type="text/javascript" src="javascripts/activities/ForgotActivity.js"></script>
   </head>
   <body class = "home">
     <div class="container">
@@ -13,12 +13,20 @@
         <div class="col-md-12 text-center">
           <div class="center-block">
             <h1 class=""><%= title %></h1>
-            <button class="btn btn-primary" onclick="goToLogin()">Log in</button>
-            <button class="btn btn-primary" onclick="goToRegister()">Register</button>
-            <br><br><br><br><br><br>
-            <h2> You do not chill. </h2>
+            <form id="forgotForm">
+
+              <!-- Username -->
+              <div class="form-group">
+                <label for="uname">Username</label>
+                <input type="text" class="form-control" id="uname" name="uname" placeholder="Username">
+              </div>
+
+              <button id="reqButt">Request Password</button>
+
+            </form>
+
+
           </div>
-          <a href="/forgot">Forgot Password?</a>
         </div>
       </div>
     </div>

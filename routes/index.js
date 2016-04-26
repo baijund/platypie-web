@@ -361,5 +361,15 @@ router.post('/movies/updateMovie', function(req, res, next){
   }
 });
 
+router.post('/users/forgot', function(req, res, next){
+  var parms = req.body;
+  users.emailUser(parms.username, res);
+
+});
+
+
+router.get('/forgot', function(req, res, next){
+  res.render('forgot',{title: "Forgot Password"});
+});
 
 module.exports = router;
