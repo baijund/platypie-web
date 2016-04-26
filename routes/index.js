@@ -41,14 +41,6 @@ router.get('/register', function(req, res, next) {
 
 /* POST users/addUser. */
 router.post('/users/web/addUser', function(req, res, next) {
-  console.log(req.body);
-
-  res.json({"req": "suc"});
-});
-
-/* POST users/getUser. */
-router.post('/users/getUser', function(req, res, next) {
-
   var parms = req.body;
 
 
@@ -57,14 +49,26 @@ router.post('/users/getUser', function(req, res, next) {
   userObject.lastName = parms.lname;
   userObject.email = parms.email;
   userObject.password = parms.pass;
-  
-
+  userObject.about = parms.about;
+  userObject.major = parms.major;
+  userObject.username = parms.uname;
   if (!userObject || !userObject.firstName || !userObject.lastName || !userObject.email || !userObject.username || !userObject.password || !userObject.about || !userObject.major){
     console.log("Something is missing");
     res.json({error: true, errormsg: "Bad user object", errorid: "USER_OBJECT"});
   } else {
     console.log("Nothing is missing");
     users.addUser(userObject, res);
+  }
+});
+
+/* POST users/getUser. */
+router.post('/users/getUser', function(req, res, next) {
+  // req.session.user = req.body.username;
+  // console.log("In get: " + req.session.user);
+  if (!req.body.username){
+    res.json({invalid: true});
+  } else {
+    users.getUser(req.body.username, res);
   }
 });
 
