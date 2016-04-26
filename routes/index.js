@@ -33,6 +33,17 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Login' });
 });
 
+/* GET profile page. */
+router.get('/profile', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("CurrentUser exists");
+    res.redirect("/login");
+    return;
+  }
+  console.log(req.session.CurrentUser);
+  res.render('profile', { title: 'Profile', user: req.session.CurrentUser });
+});
+
 /* GET register page. */
 router.get('/register', function(req, res, next) {
   // delete req.session.user;

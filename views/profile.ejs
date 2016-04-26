@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../includes/jquery %>
+    <% include ../includes/bootstrap %>
+    <script type="text/javascript" src="javascripts/activities/LoginActivity.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Profile</h1>
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email" value=<%= user.email %>>
+            </div>
+
+            <!-- First Name -->
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value=<%= user.firstname %>>
+            </div>
+
+            <!-- Last name -->
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value=<%= user.lastname %>>
+            </div>
+
+            <!-- About -->
+            <div class="form-group">
+              <label for="about">About</label>
+              <input type="text" class="form-control" id="about" name="about" placeholder="About me" value=<%= user.aboutme %>>
+            </div>
+
+            <!-- List of majors -->
+            <div class="form-group">
+              <label for="major">Major</label>
+              <select name="major" id="major">
+                <option value="Aerospace Engineering">Aerospace Engineering</option>
+                <option value="Applied Languages and Intercultural Studies">Applied Languages and Intercultural Studies</option>
+                <option value="Applied Mathematics">Applied Mathematics</option>
+                <option value="Applied Physics">Applied Physics</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Biochemistry">Biochemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="Business Administration">Business Administration</option>
+                <option value="Chemical and Biomolecular Engineering">Chemical and Biomolecular Engineering</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Computational Media">Computational Media</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Economics">Economics</option>
+                <option value="Economics and International Affairs">Economics and International Affairs</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Environmental Engineering">Environmental Engineering</option>
+                <option value="Global Economics and Modern Languages">Global Economics and Modern Languages</option>
+                <option value="History, Technology, and Society">History, Technology, and Society</option>
+                <option value="Industrial Design">Industrial Design</option>
+                <option value="Industrial Engineering">Industrial Engineering</option>
+                <option value="International Affairs">International Affairs</option>
+                <option value="International Affairs and Modern Languages">International Affairs and Modern Languages</option>
+                <option value="Literature, Media, and Communication">Literature, Media, and Communication</option>
+                <option value="Material Science and Engineering">Material Science and Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Nuclear Radiological Engineering">Nuclear Radiological Engineering</option>
+                <option value="Physics">Physics</option>
+                <option value="Psychology">Psychology</option>
+                <option value="Public Policy">Public Policy</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-default" id="regbutt" name="changeButt">Submit Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
