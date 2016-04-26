@@ -251,10 +251,36 @@ router.post('/movies/addMovie', function(req, res, next) {
 });
 
 
+/* POST movies/setCurrentMovie */
+router.post('/movies/setCurrentMovie', function(req, res, next) {
+
+  var parms = req.body;
+
+  if(parms){
+    req.session.CurrentMovie = parms;
+    res.json({error: false});
+  } else {
+    res.json({error: true});
+  }
+
+});
+
+
 /* GET movies/getMovieList. */
 router.get('/movies/getMovieList', function(req, res, next) {
 
   movies.getMovieList(res);
+
+});
+
+/* GET description. */
+router.get('/description', function(req, res, next) {
+
+  if(!req.session.CurrentMovie || !req.session.CurrentUser){
+    res.redirect('/');
+  } else {
+    res.render('description', {title: "Description"});
+  }
 
 });
 
