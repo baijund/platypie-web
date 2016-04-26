@@ -36,7 +36,7 @@ router.get('/login', function(req, res, next) {
 /* GET profile page. */
 router.get('/profile', function(req, res, next) {
   if(!req.session.CurrentUser){
-    console.log("CurrentUser exists");
+    console.log("Not logged in");
     res.redirect("/login");
     return;
   }
@@ -50,7 +50,7 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
-/* POST users/addUser. */
+/* POST users/web/addUser. */
 router.post('/users/web/addUser', function(req, res, next) {
   var parms = req.body;
 
@@ -69,6 +69,41 @@ router.post('/users/web/addUser', function(req, res, next) {
   } else {
     console.log("Nothing is missing");
     users.addUser(userObject, res);
+  }
+});
+
+/* POST users/web/getUser. */
+router.post('/users/web/editUser', function(req, res, next) {
+  var parms = req.body;
+
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.json({error: true, errorid: "LOGIN"});
+    return;
+  }
+
+  var currUser = req.session.CurrentUser;
+
+  console.log(currUser);
+
+  var userObject = {};
+  userObject.firstName = parms.fname;
+  userObject.lastName = parms.lname;
+  userObject.email = parms.email;
+  userObject.password = currUser.password;
+  userObject.about = parms.about;
+  userObject.major = parms.major;
+  userObject.username = currUser.username;
+  //Make sure userObject and all fields are defined
+  if (!userObject || !userObject.firstName || !userObject.lastName || !userObject.email || !userObject.username || !userObject.password || !userObject.about || !userObject.major){
+    res.json({error: true, errormsg: "Bad user object", errorid: "USER_OBJECT"});
+  } else {
+    //Make sure logged in user is the same as requested user
+    if(userObject.username === req.session.CurrentUser.username){
+      users.editUser(userObject, res);
+    } else {
+      res.json({error: true, errormsg: "Not logged in as proper user", errorid: "WRONG_USER"});
+    }
   }
 });
 

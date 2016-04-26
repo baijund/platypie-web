@@ -4,35 +4,39 @@
     <title><%= title %></title>
     <% include ../includes/jquery %>
     <% include ../includes/bootstrap %>
-    <script type="text/javascript" src="javascripts/activities/LoginActivity.js"></script>
+    <script type="text/javascript" src="javascripts/activities/ProfileActivity.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <h1>Profile</h1>
-          <form id="registerForm">
+
+          <input type="hidden" id="uname" value="<%= user.username %>" />
+          <input type="hidden" id="pw" value="<%= user.password %>" />
+
+          <form id="changeForm">
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Email" value=<%= user.email %>>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<%= user.email %>">
             </div>
 
             <!-- First Name -->
             <div class="form-group">
               <label for="fname">First Name</label>
-              <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value=<%= user.firstname %>>
+              <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="<%= user.firstname %>">
             </div>
 
             <!-- Last name -->
             <div class="form-group">
               <label for="lname">Last Name</label>
-              <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value=<%= user.lastname %>>
+              <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="<%= user.lastname %>">
             </div>
 
             <!-- About -->
             <div class="form-group">
               <label for="about">About</label>
-              <input type="text" class="form-control" id="about" name="about" placeholder="About me" value=<%= user.aboutme %>>
+              <input type="text" class="form-control" id="about" name="about" placeholder="About me" value="<%= user.aboutme %>">
             </div>
 
             <!-- List of majors -->
@@ -73,7 +77,7 @@
               </select>
             </div>
 
-            <button type="button" class="btn btn-default" id="regbutt" name="changeButt">Submit Changes</button>
+            <button type="button" class="btn btn-default" id="changeButt" name="changeButt">Submit Changes</button>
           </form>
         </div>
       </div>

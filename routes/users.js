@@ -121,17 +121,7 @@ var login = function(username, password, res, req){
       return console.error('could not connect to postgres', err);
     }
 
-    var q = "SELECT\
-                  users.firstname,\
-                  users.lastname,\
-                  users.email,\
-                  users.username,\
-                  users.aboutme,\
-                  users.major,\
-                  users.banned,\
-                  users.admin,\
-                  users.superadmin\
-                FROM\
+    var q = "SELECT * FROM\
                   public.users\
                 WHERE\
                   username='" + username + "' AND password='" + password + "';";
