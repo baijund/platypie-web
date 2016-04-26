@@ -25,7 +25,7 @@ $(document).ready(function(){
 
     $( "#movies" ).change(function(e) {
       console.log(e.target.value);
-      $.post("/movies/setCurrentMovie",{carrier: currentSearch.movies[parseInt(e.target.value)]}, function(){
+      $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(currentSearch.movies[parseInt(e.target.value)])}, function(){
         console.log("Set the current movie");
         window.location.href = "/description";
       });
