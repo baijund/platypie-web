@@ -74,7 +74,7 @@ router.get('/recommendations', function(req, res, next) {
     return;
   }
   console.log(req.session.CurrentUser);
-  res.render('newdvds', { title: 'Recommendations', user: req.session.CurrentUser });
+  res.render('recommendations', { title: 'Recommendations', user: req.session.CurrentUser });
 });
 
 /* GET register page. */
