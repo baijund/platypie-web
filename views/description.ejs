@@ -37,7 +37,7 @@
                         </tr>
                     </tr>
                 </table>
-                <br><br>
+                <br><br><br>
                 <table style = "width: 100%">
                     <tr>
                         <th>Synopsis</th>
@@ -46,17 +46,25 @@
                         </tr>
                     </tr>
                 </table>
-                <br><br>
+                <br><br><br>
                 <table style = "width: 100%">
                     <tr>
-                        <th>Actors</th>
+                        <th>Cast</th>
+                    </tr>
+                </table>
+                <table style = "width: 100%">
+                    <tr>
                         <tr>
-                            <%= movie.abridged_cast %>
-                            <%= JSON.stringify(movie) %>
-
+                            <% for(var i=0; i<movie.abridged_cast.length; i++) { %>
+                                    <td><%= movie.abridged_cast[i].name %> <% } %></td>
+                        <tr>
+                            <% for(var i=0; i<movie.abridged_cast.length; i++) { %>
+                                    <td><%= movie.abridged_cast[i].characters %> <% } %></td>
+                        </tr>
                         </tr>
                     </tr>
                 </table>
+                <h2> Rate! </h2>
                 <!-- <br>
 
                 <br>
