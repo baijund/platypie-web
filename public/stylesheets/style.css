@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Lucida Console", "Courier New", monospace;
   background-image: url("../images/background_fire.png");
   background-repeat: no-repeat;
   background-size:cover
@@ -10,6 +10,10 @@ a {
   color: #00B7FF;
 }
 h1 {
+    color: #9e2a00;
+}
+
+h2 {
     color: #9e2a00;
 }
 
