@@ -20,4 +20,9 @@ $(document).ready(function(){
     window.location.href = "/newdvds";
   });
 
+  $("#recButt").click(function(e){
+    e.preventDefault();
+    window.location.href = "/recommendations";
+  });
+
 });
