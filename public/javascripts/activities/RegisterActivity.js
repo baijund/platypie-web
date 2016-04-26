@@ -8,6 +8,11 @@ $(document).ready(function(){
     $.post("/users/web/addUser",$("#registerForm").serialize(),function(res){
 
       console.log("Request Succeeded");
+      if(res.err){
+        alert("Registration failed, choose another username")
+      } else {
+        window.location.href = "/login";
+      }
 
     }).fail(function(){
 

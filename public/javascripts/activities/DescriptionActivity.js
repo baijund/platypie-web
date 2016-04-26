@@ -6,10 +6,13 @@ $(document).ready(function(){
     console.log(rating);
     $.post("/movies/rateMovie", {"rating": rating}, function(response){
     //  alert();
+
       console.log("Rated movie");
       console.log("Updating in db")
-      $.post("/movies/addMovie", {movieString: JSON.stringify(response.movie), majorRatingString: JSON.stringify({id: response.id, major: "EE", rating: 5, count: 5})}, function(response){
+      $("#rath").html(response.movie.averageRating.toFixed(2));
+      $.post("/movies/addMovie", {movieString: JSON.stringify(response.movie), majorRatingString: JSON.stringify({id: response.movie.id, major: "EE", rating: 5, count: 5})}, function(response){
         console.log("Added movie");
+        alert("Rated");
       });
     })
   });

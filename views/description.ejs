@@ -35,7 +35,7 @@
                             <td><%= movie.title%></td>
                             <td><%= movie.year%></td>
                             <td><%= movie.mpaa_rating%></td>
-                            <td><%= movie.averageRating%></td>
+                            <td id="rath"><% var a = ""; if(movie.averageRating){a = movie.averageRating.toFixed(2)} %><%=a%></td>
                             <td>
                               <%= (Math.random()*5).toFixed(2) %>
                             </td>

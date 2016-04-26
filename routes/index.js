@@ -312,7 +312,11 @@ router.get('/description', function(req, res, next) {
   if(!req.session.CurrentMovie || !req.session.CurrentUser){
     res.redirect('/');
   } else {
-      console.log(typeof req.session.CurrentMovie);
+    req.session.CurrentMovie.name = req.session.CurrentMovie.title;
+    req.session.CurrentMovie.rating_mpaa = req.session.CurrentMovie.mpaa_rating;
+    req.session.CurrentMovie.description = req.session.CurrentMovie.synopsis;
+      console.log(req.session.CurrentMovie);
+
     res.render('description', {title: "Description", movie:req.session.CurrentMovie});
   }
 
@@ -326,7 +330,7 @@ router.post('/movies/rateMovie', function(req, res, next) {
   } else {
     var movie = req.session.CurrentMovie;
     var prevCount = movie.numRatings;
-    var thisRat = req.body.rating;
+    var thisRat = parseFloat(req.body.rating);
     console.log("This rating is: " + thisRat);
     if(prevCount > 0){
       var newAvg = (movie.averageRating*prevCount + thisRat)/(prevCount+1);
