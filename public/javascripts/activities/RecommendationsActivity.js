@@ -14,4 +14,17 @@ $(document).ready(function(){
     }
   })
 
+  $( "#movies" ).change(function(e) {
+    console.log(e.target.value);
+    var mov = currentSearch.movies[parseInt(e.target.value)];
+    mov.abridged_cast = mov.actors;
+    mov.mpaa_rating = mov.rating_mpaa;
+    mov.synopsis = mov.description;
+    mov.title = mov.name;
+    $.post("/movies/setCurrentMovie", mov, function(){
+      console.log("Set the current movie");
+      window.location.href = "/description";
+    });
+  });
+
 });
