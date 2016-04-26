@@ -27,9 +27,25 @@ $(document).ready(function(){
 
   $( "#movies" ).change(function(e) {
     console.log(e.target.value);
-    $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(currentSearch.movies[parseInt(e.target.value)])}, function(){
-      console.log("Set the current movie");
-      window.location.href = "/description";
+    var mov = currentSearch.movies[parseInt(e.target.value)];
+
+    $.post("/movies/getMovie", {id: mov.id}, function(response){
+      if(response.error){
+        $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(mov)}, function(){
+          console.log("Set the current movie");
+          window.location.href = "/description";
+        });
+      } else {
+        mov.abridged_cast = response.movie[0].actors;
+        mov.mpaa_rating = response.movie[0].rating_mpaa;
+        mov.synopsis = response.movie[0].description;
+        mov.title = response.movie[0].name;
+        mov.averageRating = response.movie[0].averageRating;
+        $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(mov)}, function(){
+          console.log(mov);
+          window.location.href = "/description";
+        });
+      }
     });
   });
 

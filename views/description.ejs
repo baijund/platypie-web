@@ -27,12 +27,18 @@
                             <td>Title</td>
                             <td>Year</td>
                             <td>Rating</td>
+                            <td>User Rating</td>
+                            <td>Major Rating</td>
                             <!-- <tr><td>Synopsis</td></tr> -->
                         </tr>
                         <tr>
                             <td><%= movie.title%></td>
                             <td><%= movie.year%></td>
                             <td><%= movie.mpaa_rating%></td>
+                            <td><%= movie.averageRating%></td>
+                            <td>
+                              <%= (Math.random()*5).toFixed(2) %>
+                            </td>
                             <!-- <td><%= movie.synopsis%></td> -->
                         </tr>
                     </tr>
@@ -58,24 +64,21 @@
                             <% for(var i=0; i<movie.abridged_cast.length; i++) { %>
                                     <td><%= movie.abridged_cast[i].name %> <% } %></td>
                         <tr>
-                            <% for(var i=0; i<movie.abridged_cast.length; i++) { %>
-                                    <td><%= movie.abridged_cast[i].characters %> <% } %></td>
+                            <!-- <% for(var i=0; i<movie.abridged_cast.length; i++) { %>
+                                    <td><%= movie.abridged_cast[i].characters %> <% } %></td> -->
                         </tr>
                         </tr>
                     </tr>
                 </table>
                 <h2> Rate! </h2>
-                <!-- <br>
-
-                <br>
-
-                <br>
-
-                <br>
-
-                <br>
-                <%= movie.abridged_cast%> -->
+                <p>
+                  Quantity (between 1 and 5)
+                </p>
+                  <input type="number" name="quantity" min="0" max="5" step="0.5"><br>
+                  <button id="ratButt">Rate</button>
             </p>
+
+
           </div>
         </div>
       </div>
