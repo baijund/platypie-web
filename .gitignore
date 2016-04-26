@@ -32,3 +32,8 @@ npm-debug.log
 #Any shell files
 *.sh
 *.ps1
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
