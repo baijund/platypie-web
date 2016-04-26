@@ -279,7 +279,7 @@ router.get('/description', function(req, res, next) {
   if(!req.session.CurrentMovie || !req.session.CurrentUser){
     res.redirect('/');
   } else {
-    res.render('description', {title: "Description"});
+    res.render('description', {title: "Description", movie:req.session.CurrentMovie});
   }
 
 });
