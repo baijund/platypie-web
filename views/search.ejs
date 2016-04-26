@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../includes/jquery %>
+    <% include ../includes/bootstrap %>
+    <link rel="stylesheet" type="text/css" href ="stylesheets/style.css">
+    <script type="text/javascript" src="javascripts/activities/SearchActivity.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="center-block">
+            <h1 class=""><%= title %></h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="center-block">
+            <form id="changeForm">
+
+              <!-- Search Bar -->
+              <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search" />
+              </div>
+              <button id="searchButt">Search</button>
+            </form>
+          </div>
+        </div>
+
+
+        <div class="col-md-12 text-center">
+          <div class="center-block">
+            <form id="changeForm">
+              <!-- list -->
+              <div class="form-group">
+                <!-- <label for="movies">Major</label> -->
+                <select name="movies" id="movies">
+
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

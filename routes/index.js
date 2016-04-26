@@ -50,6 +50,16 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
+/* GET register page. */
+router.get('/search', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.redirect("/login");
+    return;
+  }
+  res.render('search', { title: 'Search' });
+});
+
 /* POST users/web/addUser. */
 router.post('/users/web/addUser', function(req, res, next) {
   var parms = req.body;
