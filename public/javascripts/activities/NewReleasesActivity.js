@@ -22,4 +22,13 @@ $(document).ready(function(){
     }
 
     });
+
+    $( "#movies" ).change(function(e) {
+      console.log(e.target.value);
+      $.post("/movies/setCurrentMovie",currentSearch.movies[parseInt(e.target.value)], function(){
+        console.log("Set the current movie");
+        window.location.href = "/description";
+      });
+    });
+
 });
