@@ -55,6 +55,17 @@ router.get('/newreleases', function(req, res, next) {
   res.render('newreleases', { title: 'New Releases', user: req.session.CurrentUser });
 });
 
+/* GET newdvds page. */
+router.get('/newdvds', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.redirect("/login");
+    return;
+  }
+  console.log(req.session.CurrentUser);
+  res.render('newdvds', { title: 'New DVDs', user: req.session.CurrentUser });
+});
+
 /* GET register page. */
 router.get('/register', function(req, res, next) {
   // delete req.session.user;
