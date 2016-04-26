@@ -103,6 +103,8 @@ var addOrUpdateMovie = function(movie, majorRating, res){
   var id = movie.id;
   var q = "SELECT * FROM public.movies WHERE \"ID\"='" + id + "'";
 
+  console.log(movie);
+
   pg.connect(CONNNECTION_OBJ, function(err, client, done) {
     if(err) {
       res.json({error: true, errormsg:"Database connection error", errorid: "DB_CON_ERROR"});
@@ -145,6 +147,7 @@ var updateMovie = function(movie, majorRating, res){
 
     client.query(q, function(err, result) {
         if(err) {
+          console.log(q);
           res.json({error: true, errormsg:"Database query error in updateMovie", errorid: "QUERY"});
           return console.error('error running query', err);
         }
@@ -162,7 +165,7 @@ var updateMovie = function(movie, majorRating, res){
             console.log(q);
             // console.log(result.rows);
             if(result.rows.length){
-              q = "UPDATE public.\"majorRatings\" SET \"ID\"='" + movie.id + "', major='" + majorRating.major + "', rating='" + majorRating.rating + "', count='" + majorRating.count + "' WHERE \"ID\"='" + majorRating.id + "' AND major='" + majorRating.major + "';";
+              q = "UPDATE public.\"majorRatings\" SET \"ID\"='" + movie.id + "', major='" + majorRating.major + "', rating='" + majorRating.rating + "', count='" + majorRating.count + "' WHERE \"ID\"='" + movie.id + "' AND major='" + majorRating.major + "';";
             } else {
               q = "INSERT INTO public.\"majorRatings\" VALUES('" + movie.id + "','" + majorRating.major + "'," + majorRating.rating + "," + majorRating.count + ");";
             }
@@ -173,6 +176,7 @@ var updateMovie = function(movie, majorRating, res){
             client.query(q, function(err, result) {
                 if(err) {
                   res.json({error: true, errormsg:"Database query error in updateMovie3", errorid: "QUERY"});
+                  console.log(q);
                   return console.error('error running query', err);
                 }
 

@@ -318,6 +318,31 @@ router.get('/description', function(req, res, next) {
 
 });
 
+/* GET description. */
+router.post('/movies/rateMovie', function(req, res, next) {
+
+  if(!req.session.CurrentMovie || !req.session.CurrentUser){
+    res.json({error: true});
+  } else {
+    var movie = req.session.CurrentMovie;
+    var prevCount = movie.numRatings;
+    var thisRat = req.body.rating;
+    console.log("This rating is: " + thisRat);
+    if(prevCount > 0){
+      var newAvg = (movie.averageRating*prevCount + thisRat)/(prevCount+1);
+      console.log("new average part " + prevCount*movie.averageRating)
+      req.session.CurrentMovie.averageRating = newAvg;
+      req.session.CurrentMovie.numRatings++;
+
+    } else {
+      req.session.CurrentMovie.averageRating = thisRat;
+      req.session.CurrentMovie.numRatings = 1;
+    }
+    res.json({error: false, movie: req.session.CurrentMovie});
+  }
+
+});
+
 router.post('/movies/updateMovie', function(req, res, next){
   var movieString = req.body.movieString;
   var majorRatingString = req.body.majorRatingString;

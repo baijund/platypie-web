@@ -31,6 +31,7 @@ $(document).ready(function(){
 
     $.post("/movies/getMovie", {id: mov.id}, function(response){
       if(response.error){
+        mov.numRatings = 0;
         $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(mov)}, function(){
           console.log("Set the current movie");
           window.location.href = "/description";
@@ -41,6 +42,7 @@ $(document).ready(function(){
         mov.synopsis = response.movie[0].description;
         mov.title = response.movie[0].name;
         mov.averageRating = response.movie[0].averageRating;
+        mov.numRatings = response.movie[0].numRatings;
         $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(mov)}, function(){
           console.log(mov);
           window.location.href = "/description";

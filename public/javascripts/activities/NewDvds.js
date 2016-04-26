@@ -29,6 +29,7 @@ $(document).ready(function(){
 
       $.post("/movies/getMovie", {id: mov.id}, function(response){
         if(response.error){
+          mov.numRatings = 0;
           $.post("/movies/setCurrentMovie",{carrier: JSON.stringify(mov)}, function(){
             console.log("Set the current movie");
             window.location.href = "/description";
