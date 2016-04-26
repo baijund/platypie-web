@@ -7,12 +7,12 @@
     <script type="text/javascript" src="javascripts/activities/ProfileActivity.js"></script>
     <link rel="stylesheet" type="text/css" href ="stylesheets/style.css">
   </head>
-  <body>
+  <body class = "home">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <h1>Profile</h1>
-          <a href="/loggedin">Go Back</a>
+          <br><br>
           <input type="hidden" id="uname" value="<%= user.username %>" />
           <input type="hidden" id="pw" value="<%= user.password %>" />
 
@@ -79,6 +79,7 @@
             </div>
 
             <button type="button" class="btn btn-default" id="changeButt" name="changeButt">Submit Changes</button>
+            <h3><a href="/loggedin">Go Back</a></h3>
           </form>
         </div>
       </div>

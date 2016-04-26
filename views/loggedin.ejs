@@ -8,17 +8,18 @@
     <link rel="stylesheet" type="text/css" href ="stylesheets/style.css">
     <script type="text/javascript" src="javascripts/activities/LoggedInActivity.js"></script>
   </head>
-  <body>
+  <body class = "home">
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center">
-          <h1>Logged in as: <%= CurrentUser.username %></h1>
+          <h2>Logged in as: <%= CurrentUser.username %></h2>
           <button id="profButt">View Profile</button><br>
           <button id="searchButt">Search</button><br>
           <button id="relButt">New Releases</button><br>
           <button id="dvdButt">New DVDs</button><br>
           <button id="recButt">Recommendations</button><br>
-          <a href="/logout">logout</a>
+          <br><br>
+          <h3><a href="/logout">logout</a></h3>
         </div>
       </div>
     </div>

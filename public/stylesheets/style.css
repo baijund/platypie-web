@@ -1,9 +1,15 @@
-body {
+body.home {
   padding: 50px;
   font: 14px "Lucida Console", "Courier New", monospace;
   background-image: url("../images/background_fire.png");
   background-repeat: no-repeat;
   background-size:cover
+}
+
+body.registration {
+    padding: 50px;
+    font: 14px "Lucida Console", "Courier New", monospace;
+    background-color: black;
 }
 
 a {
@@ -15,6 +21,12 @@ h1 {
 
 h2 {
     color: #9e2a00;
+}
+
+h3 {
+    color: #9e2a00;
+    text-align: right;
+    text-decoration: underline;
 }
 
 button {
