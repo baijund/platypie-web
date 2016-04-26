@@ -44,6 +44,39 @@ router.get('/profile', function(req, res, next) {
   res.render('profile', { title: 'Profile', user: req.session.CurrentUser });
 });
 
+/* GET newreleases page. */
+router.get('/newreleases', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.redirect("/login");
+    return;
+  }
+  console.log(req.session.CurrentUser);
+  res.render('newreleases', { title: 'New Releases', user: req.session.CurrentUser });
+});
+
+/* GET newdvds page. */
+router.get('/newdvds', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.redirect("/login");
+    return;
+  }
+  console.log(req.session.CurrentUser);
+  res.render('newdvds', { title: 'New DVDs', user: req.session.CurrentUser });
+});
+
+/* GET newdvds page. */
+router.get('/recommendations', function(req, res, next) {
+  if(!req.session.CurrentUser){
+    console.log("Not logged in");
+    res.redirect("/login");
+    return;
+  }
+  console.log(req.session.CurrentUser);
+  res.render('recommendations', { title: 'Recommendations', user: req.session.CurrentUser });
+});
+
 /* GET register page. */
 router.get('/register', function(req, res, next) {
   // delete req.session.user;
@@ -257,7 +290,7 @@ router.post('/movies/setCurrentMovie', function(req, res, next) {
   var parms = req.body;
 
   if(parms){
-    req.session.CurrentMovie = parms;
+    req.session.CurrentMovie = JSON.parse(parms.carrier);
     res.json({error: false});
   } else {
     res.json({error: true});
